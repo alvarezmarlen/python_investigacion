@@ -94,6 +94,7 @@ window.toggleFiles = function(categoria, btn) {
     
     // Offset relativo al contenedor parent (category-nav)
     container.style.left = (btnRect.left - navRect.left) + "px";
+    container.style.top = (btnRect.bottom - navRect.top + 2) + "px";
     container.style.display = 'block';
 };
 
