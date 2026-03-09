@@ -1,6 +1,5 @@
 
-# función sin parámetros o retorno de valores
-def diHola():
-  print("Hello!")
+def diHola():             # 1. Definición de la función (Cabecera)
+  print("Hello!")         # 2. Bloque de código (debe estar indentado)
 
-diHola()  # llamada a la función, 'Hello!' se muestra en la consola
+diHola()                  # 3. Invocación o llamada a la función
