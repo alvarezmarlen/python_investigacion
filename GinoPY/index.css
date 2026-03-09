@@ -98,6 +98,108 @@ body {
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+/* Category Navigation Styles */
+.category-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    animation: fadeInDown 1s ease-out;
+}
+
+.cat-btn {
+    background: rgba(30, 41, 59, 0.8);
+    color: #e2e8f0;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.cat-btn:hover {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: #10b981;
+    color: #10b981;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
+}
+
+.cat-btn.active {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    border-color: #10b981;
+}
+
+.cat-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(15, 23, 42, 0.4);
+}
+
+/* Dropdown Styles (Style like Theme menu) */
+.file-list-dropdown {
+    position: absolute;
+    top: calc(100% + 2px);
+    background: rgba(15, 23, 42, 0.98);
+    min-width: 180px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    z-index: 2000;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    animation: fadeInDropdown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInDropdown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.file-menu-items {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.file-item {
+    cursor: pointer;
+    color: #cbd5e1;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-item::before {
+    content: '🐍';
+    font-size: 1.1rem;
+}
+
+.file-item:hover {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #fff;
+}
+
+.file-item.active {
+    background-color: rgba(16, 185, 129, 0.25);
+    color: #10b981;
+    font-weight: bold;
+}
+
 /* Tema Menu (CSS only) */
 .theme-dropdown {
     position: absolute;
@@ -169,12 +271,12 @@ body {
 .terminal-container h2 {
     color: #fff;
     margin-bottom: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
 }
 .terminal-container h3 {
     color: #10b981;
     margin-bottom: 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: normal;
 }
 .terminal-buttons {

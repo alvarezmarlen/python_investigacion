@@ -1,15 +1,22 @@
-# Creamos una lista de números
-numeros = [1, 2, 3, 4, 5, 6]
+# Ejemplo de la función filter en Python (sin usar lambda)
+# filter() crea un iterador con los elementos que cumplen una condición determinada
 
-# Usamos filter() para filtrar elementos de la lista
-# lambda x: x % 2 == 0 es una función pequeña que:
-# - recibe un número (x)
-# - comprueba si el número es par
-# % es el operador módulo (resto de la división)
+# Definimos una función que devuelve True si el número es par
+def comprobar_si_es_par(n):
+    # Si el resto de dividir entre 2 es 0, es par
+    return n % 2 == 0
 
-pares = list(filter(lambda x: x % 2 == 0, numeros))
+# Lista de números de ejemplo
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-# list() convierte el resultado de filter en una lista normal
+# Usamos filter para quedarnos solo con los números que pasan la prueba de la función
+# filter(función, iterable)
+# Pasamos la función 'comprobar_si_es_par' sin paréntesis y la lista de números
+resultado_filter = filter(comprobar_si_es_par, numeros)
 
-# Imprimimos el resultado en pantalla
-print("Números pares:", pares)
+# Convertimos el resultado en una lista para mostrarlo
+pares = list(resultado_filter)
+
+# Imprimimos los resultados en consola
+print("Lista original:", numeros)
+print("Números filtrados (solo pares):", pares)

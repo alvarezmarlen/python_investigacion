@@ -1,6 +1,36 @@
 let pyodideReadyPromise = null;
 const promptHTML = '<span class="terminal-user">gino@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ ';
 
+// Estructura de archivos
+const ARCHIVOS = {
+    'avanzadas': {
+        titulo: 'Funciones Avanzadas',
+        path: './funciones-avanzadas/',
+        files: ['lambda.py', 'lambdafilter.py', 'lambdamap.py', 'lambdasorted.py']
+    },
+    'funcionales': {
+        titulo: 'Funciones Funcionales',
+        path: './funciones-funcionales/',
+        files: ['filter.py', 'map.py', 'reduce.py']
+    },
+    'utiles': {
+        titulo: 'Herramientas Útiles',
+        path: './herramientas-utiles/',
+        files: ['enumerate.py', 'zip.py']
+    },
+    'fastapi': {
+        titulo: 'FastAPI',
+        path: './fastapi/',
+        files: ['main.py']
+    }
+};
+
+let archivoActual = {
+    nombre: 'lambda.py',
+    ruta: './funciones-avanzadas/lambda.py',
+    categoria: 'Funciones Avanzadas'
+};
+
 async function initPyodide() {
     if (!pyodideReadyPromise) {
         try {
@@ -12,30 +42,93 @@ async function initPyodide() {
     }
 }
 
-async function recargarCodigo() {
+async function cargarArchivo(ruta) {
     const editor = document.getElementById('python-editor');
     if (!editor) return;
     try {
-        const response = await fetch('./funciones-avanzadas/lambda.py');
-        if (!response.ok) throw new Error('No se pudo leer el archivo lambda.py');
+        const response = await fetch(ruta);
+        if (!response.ok) throw new Error('No se pudo leer el archivo: ' + ruta);
         const code = await response.text();
         editor.value = code;
-        editor.style.display = 'block'; // Mostrar una vez cargado
+        editor.style.display = 'block';
     } catch (err) {
-        editor.value = "# Error al cargar el código original: " + err.message;
+        editor.value = "# Error al cargar el archivo: " + err.message;
         editor.style.display = 'block';
     }
 }
 
-// Precargar Pyodide y el código en background si estamos en la página
-document.addEventListener("DOMContentLoaded", () => {
-    if (document.getElementById('python-editor')) {
-        initPyodide();
-        recargarCodigo();
+// Funciones globales para el HTML
+window.toggleFiles = function(categoria, btn) {
+    const container = document.getElementById('file-list-container');
+    const items = document.getElementById('file-items');
+    
+    // Si ya está abierto para esta categoría, lo cerramos
+    if (container.style.display === 'block' && btn.classList.contains('active')) {
+        closeFileSelector();
+        return;
+    }
+
+    if (!ARCHIVOS[categoria]) return;
+
+    // Actualizar botones activos
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Llenar archivos
+    items.innerHTML = '';
+    ARCHIVOS[categoria].files.forEach(file => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        if (file === archivoActual.nombre) div.classList.add('active');
+        div.innerText = file;
+        div.onclick = (e) => {
+            e.stopPropagation();
+            seleccionarArchivo(file, ARCHIVOS[categoria].path + file, ARCHIVOS[categoria].titulo);
+        };
+        items.appendChild(div);
+    });
+
+    // Posicionar el dropdown justo debajo del botón
+    const btnRect = btn.getBoundingClientRect();
+    const navRect = btn.parentElement.getBoundingClientRect();
+    
+    // Offset relativo al contenedor parent (category-nav)
+    container.style.left = (btnRect.left - navRect.left) + "px";
+    container.style.display = 'block';
+};
+
+window.closeFileSelector = function() {
+    document.getElementById('file-list-container').style.display = 'none';
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+};
+
+function seleccionarArchivo(nombre, ruta, catNombre) {
+    archivoActual = { nombre, ruta, categoria: catNombre };
+    
+    // Actualizar UI
+    document.querySelector('.terminal-container h2').innerText = catNombre;
+    document.querySelector('.terminal-container h3').innerHTML = `Archivo: <code>${nombre}</code>`;
+    
+    cargarArchivo(ruta);
+    closeFileSelector();
+    limpiarTerminal();
+}
+
+// Cerrar dropdown al hacer click fuera
+document.addEventListener('click', (e) => {
+    const container = document.getElementById('file-list-container');
+    if (container && container.style.display === 'block') {
+        if (!e.target.closest('.category-nav')) {
+            closeFileSelector();
+        }
     }
 });
 
-async function ejecutarLambda() {
+window.recargarCodigo = function() {
+    cargarArchivo(archivoActual.ruta);
+};
+
+window.ejecutarLambda = async function() {
     const output = document.getElementById('terminal-output');
     const promptStart = document.getElementById('prompt-start');
     const btnRun = document.getElementById('btn-run');
@@ -43,15 +136,12 @@ async function ejecutarLambda() {
     
     if (!editor || !output) return;
 
-    if (promptStart) {
-        promptStart.style.display = 'none';
-    }
+    if (promptStart) promptStart.style.display = 'none';
     
     const block = document.createElement('div');
-    
     const cmdSpan = document.createElement('span');
     cmdSpan.className = 'terminal-cmd';
-    cmdSpan.innerHTML = promptHTML + 'python3 GinoPY/funciones-avanzadas/lambda.py';
+    cmdSpan.innerHTML = promptHTML + `python3 GinoPY/${archivoActual.ruta.replace('./', '')}`;
     
     const resSpan = document.createElement('span');
     resSpan.className = 'terminal-res';
@@ -69,11 +159,8 @@ async function ejecutarLambda() {
 
     try {
         let pyodide = await pyodideReadyPromise;
-        
-        // En lugar de hacer un fetch, ahora cogemos el código directo del textarea editable.
         const codeToRun = editor.value;
         
-        // Redirigimos consola
         pyodide.runPython(`
 import sys
 import io
@@ -81,14 +168,11 @@ sys.stdout = io.StringIO()
 sys.stderr = io.StringIO()
         `);
         
-        // Ejecutamos el código que el usuario escribió/editó en la web
         pyodide.runPython(codeToRun);
         
-        // Obtenemos el output
         let stdout = pyodide.runPython("sys.stdout.getvalue()");
         let stderr = pyodide.runPython("sys.stderr.getvalue()");
         
-        // Formateamos para HTML
         let finalOutput = stdout;
         if (stderr) finalOutput += "\n[Error]\n" + stderr;
         
@@ -102,14 +186,12 @@ sys.stderr = io.StringIO()
             btnRun.style.opacity = '1';
         }
         
-        // Añadir nuevo prompt al final
         const newPrompt = document.createElement('span');
         newPrompt.innerHTML = promptHTML + '<span class="terminal-cursor"></span>';
         output.appendChild(newPrompt);
-        
         output.scrollTop = output.scrollHeight;
     }
-}
+};
 
 window.limpiarTerminal = function() {
     const output = document.getElementById('terminal-output');
@@ -118,5 +200,12 @@ window.limpiarTerminal = function() {
     }
 };
 
-window.ejecutarLambda = ejecutarLambda;
-window.recargarCodigo = recargarCodigo;
+// Inicialización
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById('python-editor')) {
+        initPyodide();
+        // Cargar archivo por defecto sin abrir el selector
+        archivoActual = { nombre: 'lambda.py', ruta: './funciones-avanzadas/lambda.py', categoria: 'Funciones Avanzadas' };
+        cargarArchivo(archivoActual.ruta);
+    }
+});

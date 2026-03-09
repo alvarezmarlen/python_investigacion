@@ -21,13 +21,34 @@
 
     <div class="hero">
         <div class="card">
+            <!-- Navegación de Categorías -->
+            <div class="category-nav" style="position: relative;">
+                <button class="cat-btn" onclick="toggleFiles('avanzadas', this)">Funciones Avanzadas</button>
+                <button class="cat-btn" onclick="toggleFiles('funcionales', this)">Funciones Funcionales</button>
+                <button class="cat-btn" onclick="toggleFiles('utiles', this)">Herramientas Útiles</button>
+                <button class="cat-btn disabled">Pyramid</button>
+                <button class="cat-btn" onclick="toggleFiles('fastapi', this)">FastAPI</button>
+
+                <!-- Menú desplegable estilo "Tema" -->
+                <div id="file-list-container" class="file-list-dropdown" style="display: none;">
+                    <div id="file-items" class="file-menu-items">
+                        <!-- Los archivos se cargarán dinámicamente aquí -->
+                    </div>
+                </div>
+            </div>
+
             <h1>Gino</h1>
-            <p>Bienvenido a mi sección. Explora los retos superados y los desarrollos construidos paso a paso con el equipo.</p>
+            <p>Explora mi colección de scripts de Python, organizados por complejidad y propósito. Selecciona una categoría arriba para empezar.</p>
             
             <div class="terminal-container">
                 <h2>Funciones Avanzadas</h2>
                 <h3>Ejemplo: Función <code>lambda</code> en Python</h3>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                <div    style="display: flex; 
+                        justify-content: space-between; 
+                        align-items: center; 
+                        margin-bottom: 1rem; 
+                        flex-wrap: wrap; 
+                        gap: 1rem;">
                     <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0;">Puedes editar el código del archivo <code>lambda.py</code> aquí mismo antes de ejecutarlo:</p>
                     <div class="theme-dropdown" style="position: relative; top: auto; right: auto;">
                         <input type="checkbox" id="theme-toggle" style="display:none;">
