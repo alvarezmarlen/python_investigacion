@@ -1,14 +1,16 @@
-# Lista de números
+# Ejemplo de función lambda con map en Python
+# map() aplica una función a todos los elementos de una lista
+
+# Definimos una lista de números
 numeros = [1, 2, 3, 4, 5]
 
-# Usamos map() para aplicar una operación a cada número de la lista
-# lambda x: x**2
-# x -> cada número de la lista
-# **2 -> elevar el número al cuadrado
+# Usamos lambda para definir la función que eleva cada número al cuadrado
+# map(función, iterable) recibe:
+# 1. lambda x: x ** 2 -> función anónima que toma x y devuelve su cuadrado
+# 2. numeros -> la lista sobre la que queremos iterar
+cuadrados = list(map(lambda x: x ** 2, numeros))
 
-cuadrados = list(map(lambda x: x**2, numeros))
-
-# list() convierte el resultado de map en una lista normal
-
-# Mostramos el resultado
-print("Números al cuadrado:", cuadrados)
+# Imprimimos el resultado
+# list() se usa para convertir el objeto map en una lista legible
+print("Lista original:", numeros)
+print("Números al cuadrado con lambda y map:", cuadrados)
