@@ -43,8 +43,6 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-
-
 .hero {
     display: flex;
     flex-direction: column;
@@ -56,15 +54,8 @@ body {
     text-align: center;
     padding: 2rem;
 }
-.hero h1 {
-    font-size: 5rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #10b981, #14b8a6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: fadeInDown 1s ease-out;
-}
+
+
 .hero p {
     font-size: 1.5rem;
     color: #cbd5e1;
