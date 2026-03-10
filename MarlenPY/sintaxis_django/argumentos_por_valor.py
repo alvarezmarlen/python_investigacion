@@ -1,0 +1,1 @@
+""" "En el paso por valor, el parámetro es una fotocopia (si rayas la copia, el original sigue limpio). En el paso por referencia, el parámetro es una llave (si entras con la llave y pintas la pared, la casa original queda pintada) """
