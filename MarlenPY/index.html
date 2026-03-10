@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marlen - Perfil</title>
+    <title>Investigacion Python - Marlen</title>
     <!-- Mismo CSS para el NavBar -->
     <link rel="stylesheet" href="../Navbar/index.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <input type="radio" name="theme" id="dark-mode" checked style="display:none;">
+    <input type="radio" name="theme" id="light-mode" style="display:none;">
     <nav class="navbar">
         <div class="nav-buttons">
             <a class="nav-button active" href="../MarlenPY/index.html">Marlen</a>
@@ -19,8 +21,71 @@
 
     <div class="hero">
         <div class="card">
-            <h1>Marlen</h1>
-            <p>Bienvenido a mi espacio personal. Aquí encontrarás mis proyectos, investigaciones y avances en el mundo del desarrollo y la tecnología.</p>
+            <!-- Navegación de Categorías -->
+            <div class="category-nav" style="position: relative;">
+                <button class="cat-btn" onclick="toggleFiles('parametros', this)">Parámetros y Argumentos</button>
+                <button class="cat-btn" onclick="toggleFiles('retorno', this)">Retorno de Valores</button>
+
+
+                <!-- Menú desplegable estilo "Tema" -->
+                <div id="file-list-container" class="file-list-dropdown" style="display: none;">
+                    <div id="file-items" class="file-menu-items">
+                        <!-- Los archivos se cargarán dinámicamente aquí -->
+                    </div>
+                </div>
+            </div>
+            <div class="terminal-container">
+                <h2>Parámetros y Argumentos</h2>
+                <h3>Archivo: <code>paso_por_referencia.py</code></h3>
+                <div    style="display: flex; 
+                        justify-content: flex-start; 
+                        align-items: center; 
+                        margin-bottom: 1rem; 
+                        flex-wrap: wrap; 
+                        gap: 1rem;">
+                    
+                    <div class="theme-dropdown" style="position: relative; top: auto; right: auto;">
+                        <input type="checkbox" id="theme-toggle" style="display:none;">
+                        <label class="btn-theme" for="theme-toggle">Tema ▼</label>
+                        <div id="theme-menu" class="theme-menu-content">
+                            <label for="dark-mode">Modo oscuro</label>
+                            <label for="light-mode">Modo claro</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Editor de Código -->
+                <div class="code-editor-wrapper" style="margin-bottom: 0.1rem;">
+                    <textarea id="python-editor" spellcheck="false" style="width: 97%; resize: vertical; display: none;">Cargando código...</textarea>
+                </div>
+
+                <!-- Terminal -->
+                <div class="real-terminal-wrapper">
+                    <div class="real-terminal-header">
+                        <div class="terminal-dots">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-title">bash - marlen@python-dev: ~/proyecto</div>
+                    </div>
+                    <div class="terminal-window" id="terminal-output">
+                        <span id="prompt-start">
+                            <span class="terminal-user">marlen@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ <span class="terminal-cursor"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="terminal-buttons" style="margin-top: 1.5rem;">
+                    <a class="btn-terminal btn-run" href="javascript:void(0)" onclick="ejecutarTerminal()" id="btn-run">▶ Ejecutar script</a>
+                    <a class="btn-terminal btn-clear" href="javascript:void(0);" onclick="limpiarTerminal()">🗑 Limpiar</a>
+                    <a class="btn-terminal" style="background: #3b82f6;" href="javascript:void(0);" onclick="recargarCodigo()">🔄 Restaurar archivo original</a>
+                </div>
+            </div>
+            
+            <!-- Pyodide para ejecutar Python en navegador -->
+            <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+            <script src="terminal.js"></script>
         </div>
     </div>
 </body>

@@ -1,34 +1,24 @@
 let pyodideReadyPromise = null;
-const promptHTML = '<span class="terminal-user">gino@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ ';
+const promptHTML = '<span class="terminal-user">marlen@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ ';
 
 // Estructura de archivos
 const ARCHIVOS = {
-    'avanzadas': {
-        titulo: 'Funciones Avanzadas',
-        path: './funciones-avanzadas/',
-        files: ['lambda.py', 'lambdafilter.py', 'lambdamap.py', 'lambdasorted.py']
+    'parametros': {
+        titulo: 'Parámetros y Argumentos',
+        path: './parametros_argumentos/',
+        files: ['paso_por_referencia.py', 'paso_por_valor.py', 'por_defecto.py', 'por_posicion.py']
     },
-    'funcionales': {
-        titulo: 'Funciones Funcionales',
-        path: './funciones-funcionales/',
-        files: ['filter.py', 'map.py', 'reduce.py']
-    },
-    'utiles': {
-        titulo: 'Herramientas Útiles',
-        path: './herramientas-utiles/',
-        files: ['enumerate.py', 'zip.py']
-    },
-    'fastapi': {
-        titulo: 'FastAPI',
-        path: './fastapi/',
-        files: ['main.py']
+    'retorno': {
+        titulo: 'Retorno de Valores',
+        path: './retorno_de_valores/',
+        files: ['retorno_de_colecciones.py', 'retorno_implicito.py', 'retorno_multiple.py', 'retorno_unico.py']
     }
 };
 
 let archivoActual = {
-    nombre: 'lambda.py',
-    ruta: './funciones-avanzadas/lambda.py',
-    categoria: 'Funciones Avanzadas'
+    nombre: 'paso_por_referencia.py',
+    ruta: './parametros_argumentos/paso_por_referencia.py',
+    categoria: 'Parámetros y Argumentos'
 };
 
 async function initPyodide() {
@@ -129,7 +119,7 @@ window.recargarCodigo = function() {
     cargarArchivo(archivoActual.ruta);
 };
 
-window.ejecutarLambda = async function() {
+window.ejecutarTerminal = async function() {
     const output = document.getElementById('terminal-output');
     const promptStart = document.getElementById('prompt-start');
     const btnRun = document.getElementById('btn-run');
@@ -142,7 +132,7 @@ window.ejecutarLambda = async function() {
     const block = document.createElement('div');
     const cmdSpan = document.createElement('span');
     cmdSpan.className = 'terminal-cmd';
-    cmdSpan.innerHTML = promptHTML + `python3 GinoPY/${archivoActual.ruta.replace('./', '')}`;
+    cmdSpan.innerHTML = promptHTML + `python3 MarlenPY/${archivoActual.ruta.replace('./', '')}`;
     
     const resSpan = document.createElement('span');
     resSpan.className = 'terminal-res';
@@ -206,7 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById('python-editor')) {
         initPyodide();
         // Cargar archivo por defecto sin abrir el selector
-        archivoActual = { nombre: 'lambda.py', ruta: './funciones-avanzadas/lambda.py', categoria: 'Funciones Avanzadas' };
+        archivoActual = { 
+            nombre: 'paso_por_referencia.py', 
+            ruta: './parametros_argumentos/paso_por_referencia.py', 
+            categoria: 'Parámetros y Argumentos' 
+        };
         cargarArchivo(archivoActual.ruta);
     }
 });
