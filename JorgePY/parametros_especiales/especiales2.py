@@ -12,6 +12,7 @@ def crear_perfil(usuario_id, *args, **kwargs):
     }
     # Agregamos todos los datos con nombre
     # kwargs es un diccionario con los argumentos nombrados.
+    # items() devuelve pares clave-valor del diccionario.
     # El for recorre cada par y los agrega al diccionario perfil.
     for clave, valor in kwargs.items():
         perfil[clave] = valor

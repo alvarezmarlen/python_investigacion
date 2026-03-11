@@ -1,28 +1,39 @@
+# función flexible que crea un perfil de usuario dinámico usando argumentos 
+# posicionales (*args) y argumentos con nombre (**kwargs).
+
 def crear_perfil_dinamico(usuario_id, *args, **kwargs):
-    # Claves predefinidas para los args posicionales
+    
+    # Lista de claves que se usarán para asignar los argumentos posicionales
     claves_args = ["nombre", "apellido", "segundo_apellido"]
     
+     # Creamos el diccionario base del perfil con el ID del usuario
     perfil = {"id": usuario_id}
     
-    # Asignamos los args a las claves correspondientes
-    # enumerate toma una coleccion y devuelve un enumerado
+    # Recorremos los argumentos posicionales (*args)
+    # enumerate() devuelve pares (indice, valor)
+    # ejemplo: (0, "Ana")
     for i, valor in enumerate(args):
+
+         # Si todavía hay claves definidas en claves_args
         if i < len(claves_args):
+             # Asignamos el valor a la clave correspondiente
             perfil[claves_args[i]] = valor
         else:
-            # Si hay más args que claves, los guardamos como adicionales
+            # Si hay más argumentos que claves disponibles,
+            # los guardamos como campos extra dinámicos extra_1, extra_2, etc.
             perfil[f"extra_{i - len(claves_args) + 1}"] = valor
     
-    # Agregamos los kwargs al perfil
-    # update inserta items en un diccionario
+    # Añadimos al diccionario todos los argumentos con nombre (**kwargs)
+    # update() inserta cada par clave-valor dentro del diccionario
     perfil.update(kwargs)
     
+    # Devolvemos el diccionario final con toda la información del usuario
     return perfil
 
 # Ejemplo de uso
 perfil1 = crear_perfil_dinamico(
     101,
-    "Ana", "García",          # nombre y apellido
+    "Ana", "García",       
     edad=28,
     ciudad="Madrid",
     ocupacion="Ingeniera"
@@ -30,16 +41,16 @@ perfil1 = crear_perfil_dinamico(
 
 perfil2 = crear_perfil_dinamico(
     102,
-    "Luis", "Pérez", "Santos", # nombre, apellido y segundo apellido
+    "Luis", "Pérez", "Santos",
     ciudad="Barcelona",
     hobby="Futbol"
 )
 
 perfil3 = crear_perfil_dinamico(
     103,
-    "Marta",                    # solo nombre
-    "Lopez",                     # apellido
-    "ExtraDato1", "ExtraDato2",  # datos extra sin clave predefinida
+    "Marta",                 
+    "Lopez",                    
+    "ExtraDato1", "ExtraDato2",  
     profesion="Doctora"
 )
 

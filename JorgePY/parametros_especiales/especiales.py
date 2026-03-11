@@ -1,4 +1,4 @@
-# función de Python que usa argumentos normales, *args y **kwargs
+# Función de Python que usa argumentos normales, *args y **kwargs
 
 def my_function(title, *args, **kwargs):
   print("Title:", title)
