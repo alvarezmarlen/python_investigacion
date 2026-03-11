@@ -221,9 +221,7 @@ body {
     font-family: 'JetBrains Mono', monospace;
     color: var(--terminal-text);
     font-weight: 700;
-    min-height: 300px;
-    max-height: 454px;
-    height: auto;
+    height: 450px;
     overflow-y: auto;
     font-size: clamp(0.9rem, 2vw, 1.05rem);
     line-height: 1.7;
@@ -321,9 +319,7 @@ body {
 .editor-body {
     position: relative;
     width: 100%;
-    min-height: 300px;
-    max-height: 454px;
-    height: auto;
+    height: 450px;
     background: var(--editor-bg);
     border: 2px solid var(--terminal-border);
     border-radius: 12px;
