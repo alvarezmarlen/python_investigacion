@@ -1,8 +1,6 @@
-def saludar(a, b):
-    return a + b
+# 4. Retorno Implícito: La función termina sin 'return', devuelve None
+def saludar(nombre):
+  print(f"Hola, {nombre}")    # Al no haber return, Python añade implícitamente: return None
 
-# 1. Llamas a la función y guardas el resultado en una variable
-resultado = saludar("Hello ", "Clases")
-
-# 2. Imprimes la variable
-print(resultado)
+resultado_saludo = saludar("Juan") # Resultado: None
+print(resultado_saludo)

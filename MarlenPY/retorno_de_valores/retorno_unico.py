@@ -1,8 +1,6 @@
-def obtener_datos():
-    # Esto es el empaquetado (packing) en una tupla
-    return "Python", 3.14, True
+# 1. Retorno Simple: Devuelve un único dato
+def sumar(a, b):
+  return a + b
 
-# Llamamos a la función
-resultado = obtener_datos()
-
-print(f"El valor devuelto es: {resultado}")
+resultado = sumar(5, 3)
+print(resultado)
