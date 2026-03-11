@@ -1,24 +1,24 @@
 let pyodideReadyPromise = null;
-const promptHTML = '<span class="terminal-user">jorge@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ ';
+const promptHTML = '<span class="terminal-user">marlen@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ ';
 
 // Estructura de archivos
 const ARCHIVOS = {
-    'especiales': {
-        titulo: 'Parámetros Especiales',
-        path: './parametros_especiales/',
-        files: ['especiales.py', 'especiales2.py', 'especiales3.py']
+    'parametros': {
+        titulo: 'Parámetros y Argumentos',
+        path: '../parametros_argumentos/',
+        files: ['paso_por_referencia.py', 'paso_por_valor.py', 'por_defecto.py', 'por_posicion.py']
     },
-    'alcance': {
-        titulo: 'Alcance de Variables',
-        path: './alcance/',
-        files: ['alcance1.py', 'alcance2.py', 'alcance3.py', 'alcance4.py', 'alcance5.py']
+    'retorno': {
+        titulo: 'Retorno de Valores',
+        path: '../retorno_de_valores/',
+        files: ['retorno_de_colecciones.py', 'retorno_implicito.py', 'retorno_multiple.py', 'retorno_unico.py']
     }
 };
 
 let archivoActual = {
-    nombre: 'especiales.py',
-    ruta: './parametros_especiales/especiales.py',
-    categoria: 'Parámetros Especiales'
+    nombre: 'paso_por_referencia.py',
+    ruta: '../parametros_argumentos/paso_por_referencia.py',
+    categoria: 'Parámetros y Argumentos'
 };
 
 async function initPyodide() {
@@ -162,7 +162,7 @@ window.ejecutarTerminal = async function() {
     const block = document.createElement('div');
     const cmdSpan = document.createElement('span');
     cmdSpan.className = 'terminal-cmd';
-    cmdSpan.innerHTML = promptHTML + `python3 JorgePY/${archivoActual.ruta.replace('./', '')}`;
+    cmdSpan.innerHTML = promptHTML + `python3 MarlenPY/${archivoActual.ruta.replace('./', '')}`;
     
     const resSpan = document.createElement('span');
     resSpan.className = 'terminal-res';
@@ -237,12 +237,12 @@ window.limpiarTerminal = function() {
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById('python-editor')) {
         initPyodide();
-        // Cargar archivo por defecto
+        // Cargar archivo por defecto sin abrir el selector
         archivoActual = { 
-            nombre: 'especiales.py', 
-            ruta: './parametros_especiales/especiales.py', 
-            categoria: 'Parámetros Especiales' 
+            nombre: 'paso_por_referencia.py', 
+            ruta: '../parametros_argumentos/paso_por_referencia.py', 
+            categoria: 'Parámetros y Argumentos' 
         };
-        seleccionarArchivo(archivoActual.nombre, archivoActual.ruta, archivoActual.categoria);
+        cargarArchivo(archivoActual.ruta);
     }
 });

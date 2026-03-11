@@ -5,29 +5,29 @@ const promptHTML = '<span class="terminal-user">gino@python-dev</span>:<span cla
 const ARCHIVOS = {
     'avanzadas': {
         titulo: 'Funciones Avanzadas',
-        path: './funciones-avanzadas/',
+        path: '../funciones-avanzadas/',
         files: ['lambda.py', 'lambdafilter.py', 'lambdamap.py', 'lambdasorted.py']
     },
     'funcionales': {
         titulo: 'Funciones Funcionales',
-        path: './funciones-funcionales/',
+        path: '../funciones-funcionales/',
         files: ['filter.py', 'map.py', 'reduce.py']
     },
     'utiles': {
         titulo: 'Herramientas Útiles',
-        path: './herramientas-utiles/',
+        path: '../herramientas-utiles/',
         files: ['enumerate.py', 'zip.py']
     },
     'fastapi': {
         titulo: 'FastAPI',
-        path: './fastapi/',
+        path: '../fastapi/',
         files: ['main.py']
     }
 };
 
 let archivoActual = {
     nombre: 'lambda.py',
-    ruta: './funciones-avanzadas/lambda.py',
+    ruta: '../funciones-avanzadas/lambda.py',
     categoria: 'Funciones Avanzadas'
 };
 
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById('python-editor')) {
         initPyodide();
         // Cargar archivo por defecto sin abrir el selector
-        archivoActual = { nombre: 'lambda.py', ruta: './funciones-avanzadas/lambda.py', categoria: 'Funciones Avanzadas' };
+        archivoActual = { nombre: 'lambda.py', ruta: '../funciones-avanzadas/lambda.py', categoria: 'Funciones Avanzadas' };
         cargarArchivo(archivoActual.ruta);
     }
 });
