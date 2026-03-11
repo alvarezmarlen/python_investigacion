@@ -50,20 +50,13 @@
                 </div>
                 
                 <!-- Editor de Código -->
-                <div class="code-editor-wrapper" style="margin-bottom: 0.1rem;">
-                    <textarea id="python-editor" spellcheck="false" style="width: 100%; resize: vertical; display: none;">Cargando código...</textarea>
-                </div>
+                    <div class="editor-body">
+                        <pre id="editor-highlight"></pre>
+                        <textarea id="python-editor" spellcheck="false" oninput="updateEditorHighlight()">Cargando código...</textarea>
+                    </div>
 
                 <!-- Terminal -->
                 <div class="real-terminal-wrapper">
-                    <div class="real-terminal-header">
-                        <div class="terminal-dots">
-                            <div class="dot dot-red"></div>
-                            <div class="dot dot-yellow"></div>
-                            <div class="dot dot-green"></div>
-                        </div>
-                        <div class="terminal-title">bash - jorge@python-dev: ~/proyecto</div>
-                    </div>
                     <div class="terminal-window" id="terminal-output">
                         <span id="prompt-start">
                             <span class="terminal-user">jorge@python-dev</span>:<span class="terminal-path">~/proyecto</span>$ <span class="terminal-cursor"></span>

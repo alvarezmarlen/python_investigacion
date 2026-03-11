@@ -50,12 +50,47 @@ async function cargarArchivo(ruta) {
         if (!response.ok) throw new Error('No se pudo leer el archivo: ' + ruta);
         const code = await response.text();
         editor.value = code;
-        editor.style.display = 'block';
+        updateEditorHighlight();
     } catch (err) {
         editor.value = "# Error al cargar el archivo: " + err.message;
-        editor.style.display = 'block';
+        updateEditorHighlight();
     }
 }
+
+window.updateEditorHighlight = function() {
+    const editor = document.getElementById('python-editor');
+    const highlight = document.getElementById('editor-highlight');
+    if (!editor || !highlight) return;
+
+    let code = editor.value;
+    
+    // Simple Comment Highlighting
+    // Replace # lines with blue spans
+    let highlighted = code
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/(#.*)/g, '<span class="code-comment">$1</span>');
+    
+    // Add extra space at the end to match textarea scrolling
+    highlight.innerHTML = highlighted + (code.endsWith('\n') ? '\n ' : ' ');
+    
+    // Sync scrolling
+    highlight.scrollTop = editor.scrollTop;
+    highlight.scrollLeft = editor.scrollLeft;
+};
+
+// Sync scroll events
+document.addEventListener('DOMContentLoaded', () => {
+    const editor = document.getElementById('python-editor');
+    const highlight = document.getElementById('editor-highlight');
+    if (editor && highlight) {
+        editor.onscroll = () => {
+            highlight.scrollTop = editor.scrollTop;
+            highlight.scrollLeft = editor.scrollLeft;
+        };
+    }
+});
 
 // Funciones globales para el HTML
 window.toggleFiles = function(categoria, btn) {
@@ -174,10 +209,22 @@ sys.stderr = io.StringIO()
         let stdout = pyodide.runPython("sys.stdout.getvalue()");
         let stderr = pyodide.runPython("sys.stderr.getvalue()");
         
-        let finalOutput = stdout;
-        if (stderr) finalOutput += "\n[Error]\n" + stderr;
-        
-        resSpan.innerHTML = finalOutput ? finalOutput.replace(/\n/g, '<br>') : '<em>(Sin salida)</em>';
+        if (stderr) {
+            resSpan.innerHTML = '<span style="color: #ef4444;">Error de Python:<br>' + stderr.replace(/\n/g, '<br>') + '</span>';
+        } else if (stdout) {
+            resSpan.innerHTML = '';
+            const lines = stdout.split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim() === '' && i === lines.length - 1) continue;
+                const lineDiv = document.createElement('div');
+                lineDiv.innerText = lines[i];
+                resSpan.appendChild(lineDiv);
+                output.scrollTop = output.scrollHeight;
+                await new Promise(resolve => setTimeout(resolve, 500)); // Delay per line
+            }
+        } else {
+            resSpan.innerHTML = '<em>(Sin salida)</em>';
+        }
 
     } catch (err) {
         resSpan.innerHTML = '<span style="color: #ef4444;">Error de Python:<br>' + err.toString().replace(/\n/g, '<br>') + '</span>';
@@ -192,7 +239,7 @@ sys.stderr = io.StringIO()
         output.appendChild(newPrompt);
         output.scrollTop = output.scrollHeight;
     }
-};
+}
 
 window.limpiarTerminal = function() {
     const output = document.getElementById('terminal-output');
