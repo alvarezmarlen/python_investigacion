@@ -37,11 +37,12 @@ body:has(#light-mode:checked) {
 }
 
 body {
-    background-color: var(--bg-color);
+    background: linear-gradient(135deg, #0b0f1a 0%, #008ffa 100%);
+    background-attachment: fixed;
     color: var(--text-color);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    transition: background-color 0.3s ease;
+    min-height: 100vh;
 }
 
 /* Custom Scrollbar */
@@ -66,7 +67,7 @@ body {
 
 /* Formal Layout Structure */
 .hero {
-    padding: 6rem 2rem 2rem;
+    padding: clamp(3rem, 10vw, 6rem) clamp(1rem, 5vw, 2rem) 2rem;
     max-width: 1400px;
     margin: 0 auto;
     text-align: left;
@@ -74,7 +75,7 @@ body {
 
 .hero h1 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 8vw, 3.5rem);
     font-weight: 800;
     margin: 0 0 1rem;
     letter-spacing: -2px;
@@ -82,28 +83,30 @@ body {
 }
 
 .hero p {
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
     color: #94a3b8;
     max-width: 600px;
-    margin-bottom: 3rem;
+    margin-bottom: clamp(1.5rem, 5vw, 3rem);
 }
 
 .card {
     background: var(--card-bg);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
-    padding: 4rem;
+    padding: clamp(1.5rem, 5vw, 4rem);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     max-width: 1400px;
     width: 95%;
-    margin: 0 auto 6rem;
+    margin: 0 auto clamp(2rem, 10vw, 6rem);
+    box-sizing: border-box;
 }
 
-/* Category Navigation - Larger Buttons */
+/* Category Navigation - Fluid Layout */
 .category-nav {
     display: flex;
-    gap: 1.5rem;
-    margin-bottom: 4rem; /* Increased margin to avoid overlap with headers */
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: clamp(2rem, 8vw, 4rem);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 1.5rem;
 }
@@ -137,8 +140,8 @@ body {
 /* Theme Toggle Dropdown */
 .theme-dropdown {
     position: absolute;
-    top: 4rem;
-    right: 4rem;
+    top: clamp(1.5rem, 5vw, 4rem);
+    right: clamp(1.5rem, 5vw, 4rem);
 }
 
 .btn-theme {
@@ -189,7 +192,7 @@ body {
 
 .terminal-container h2 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
     margin: 0;
     color: var(--text-color);
 }
@@ -214,13 +217,15 @@ body {
 /* Removed Terminal Header Title Style */
 
 .terminal-window {
-    padding: 2rem;
+    padding: clamp(1rem, 3vw, 2rem);
     font-family: 'JetBrains Mono', monospace;
     color: var(--terminal-text);
     font-weight: 700;
-    height: 454px;
+    min-height: 300px;
+    max-height: 454px;
+    height: auto;
     overflow-y: auto;
-    font-size: 1.05rem;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
     line-height: 1.7;
 }
 
@@ -237,17 +242,20 @@ body {
 
 @keyframes blink { 50% { opacity: 0; } }
 
-/* Premium Terminal Buttons - Glassmorphism Style */
+/* Premium Terminal Buttons - Responsive Layout */
 .terminal-buttons {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-top: 2rem;
 }
 
 .btn-terminal {
-    padding: 1.2rem 2.8rem;
+    padding: 1rem 1.5rem;
+    min-width: 120px;
+    flex: 1 1 auto;
     border-radius: 12px;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 800;
     cursor: pointer;
     text-decoration: none;
@@ -312,7 +320,9 @@ body {
 .editor-body {
     position: relative;
     width: 100%;
-    height: 454px;
+    min-height: 300px;
+    max-height: 454px;
+    height: auto;
     background: var(--editor-bg);
     border: 2px solid var(--terminal-border);
     border-radius: 12px;
@@ -321,13 +331,14 @@ body {
 
 #python-editor, #editor-highlight {
     margin: 0;
-    padding: 2.5rem;
+    padding: clamp(1rem, 3vw, 2.5rem);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1.15rem;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
     font-weight: 700;
     line-height: 1.6;
     width: 100%;
     height: 100%;
+    min-height: 300px;
     box-sizing: border-box;
     tab-size: 4;
     white-space: pre-wrap;
@@ -424,6 +435,44 @@ body:has(#light-mode:checked) .code-comment {
     background: rgba(0, 130, 131, 0.2);
     color: var(--accent-color);
     border-left: 3px solid var(--accent-color);
+}
+
+/* --- Responsive Helpers --- */
+@media (max-width: 768px) {
+    .category-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cat-btn {
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1.2rem;
+    }
+
+    .theme-dropdown {
+        position: static;
+        margin-top: 1rem;
+        width: fit-content;
+    }
+
+    .terminal-buttons {
+        flex-direction: column;
+    }
+
+    .btn-terminal {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-dots {
+        display: none;
+    }
+    
+    .terminal-window, #python-editor, #editor-highlight {
+        padding: 1rem;
+    }
 }
 
 /* Removed Editor Header Styles */

@@ -7,6 +7,11 @@ const ARCHIVOS = {
         titulo: 'Parámetros Especiales',
         path: './parametros_especiales/',
         files: ['especiales.py', 'especiales2.py', 'especiales3.py']
+    },
+    'alcance': {
+        titulo: 'Alcance de Variables',
+        path: './alcance/',
+        files: ['alcance1.py', 'alcance2.py', 'alcance3.py', 'alcance4.py', 'alcance5.py']
     }
 };
 
